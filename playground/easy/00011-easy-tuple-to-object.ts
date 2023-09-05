@@ -20,7 +20,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToObject<T extends readonly any[]> = any
+// keyof any => string | number | symbol
+type TupleToObject<T extends readonly (keyof any)[]> = {
+  [P in T[number]]: P
+}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
