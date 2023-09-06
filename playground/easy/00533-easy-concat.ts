@@ -18,13 +18,18 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Concat<T, U> = any
+// type Concat<T extends readonly any[], U extends readonly any[]> =
+//     T extends []
+//       ? U extends []
+//         ? []
+//         : [U[number]]
+//       : [T[number], U[number]]
+type Concat<T extends readonly unknown[], U extends readonly unknown[]> = [...T, ...U]
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
 const tuple = [1] as const
-
 type cases = [
   Expect<Equal<Concat<[], []>, []>>,
   Expect<Equal<Concat<[], [1]>, [1]>>,
