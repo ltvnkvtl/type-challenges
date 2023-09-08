@@ -39,10 +39,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+type Chainable<S = {}> = {
+  option<K extends string, V>(key: K extends keyof S ? (V extends S[K] ? never : K) : K, value: V): Chainable<S & { [P in K]: V }>
+  get(): S
 }
+
+// type Chainable<T = {}> = {
+//   option<K extends string, V>(key: K extends keyof T ?
+//     V extends T[K] ? never : K
+//     : K, value: V): Chainable<Omit<T, K> & { [P in K]: V }>
+//   get(): T
+// }
 
 /* _____________ Test Cases _____________ */
 import type { Alike, Expect } from '@type-challenges/utils'
