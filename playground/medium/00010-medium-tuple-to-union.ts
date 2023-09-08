@@ -20,14 +20,19 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToUnion<T> = any
+// type TupleToUnion<T extends readonly unknown[]> = T extends ReadonlyArray<infer Items> ? Items : never
+// type TupleToUnion<T extends readonly unknown[]> = T extends [infer First, ...infer Rest] ? (First | TupleToUnion<Rest>) : never
+type TupleToUnion<T extends readonly unknown[]> = T[number]
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
+const v1 = [1, 2, '3'] as const
+
 type cases = [
   Expect<Equal<TupleToUnion<[123, '456', true]>, 123 | '456' | true>>,
   Expect<Equal<TupleToUnion<[123]>, 123>>,
+  Expect<Equal<TupleToUnion<typeof v1>, 1 | 2 | '3'>>,
 ]
 
 /* _____________ Further Steps _____________ */
