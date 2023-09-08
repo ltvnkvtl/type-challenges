@@ -36,7 +36,39 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DeepReadonly<T> = any
+// type Primitive = string | number | boolean | bigint | symbol | undefined | null
+// type Builtin = Primitive | Function | Date | Error | RegExp
+// type DeepReadonly<T> = T extends Builtin
+//   ? T
+//   : T extends Map<infer K, infer V>
+//     ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+//     : T extends ReadonlyMap<infer K, infer V>
+//       ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+//       : T extends WeakMap<infer K, infer V>
+//         ? WeakMap<DeepReadonly<K>, DeepReadonly<V>>
+//         : T extends Set<infer U>
+//           ? ReadonlySet<DeepReadonly<U>>
+//           : T extends ReadonlySet<infer U>
+//             ? ReadonlySet<DeepReadonly<U>>
+//             : T extends WeakSet<infer U>
+//               ? WeakSet<DeepReadonly<U>>
+//               : T extends Promise<infer U>
+//                 ? Promise<DeepReadonly<U>>
+//                 : T extends {}
+//                   ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+//                   : Readonly<T>
+
+// type DeepReadonly<T> = keyof T extends never
+//   ? T
+//   : { readonly [k in keyof T]: DeepReadonly<T[k]> }
+
+type DeepReadonly<T> = {
+  readonly [K in keyof T]: T[K] extends Function
+    ? T[K]
+    : T[K] extends { [k in string]: any }
+      ? DeepReadonly<T[K]>
+      : T[K]
+}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
