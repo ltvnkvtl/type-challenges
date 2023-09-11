@@ -32,7 +32,6 @@ declare function PromiseAll<T extends any[]>(values: readonly [...T]): Promise<{
   [key in keyof T]: Awaited<T[key]>
 }>
 
-
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
