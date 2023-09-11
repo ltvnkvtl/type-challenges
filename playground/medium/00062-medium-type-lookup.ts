@@ -29,7 +29,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type LookUp<U, T> = any
+// type LookUp<U, T extends string> = {
+//   [K in T]: U extends { type: T } ? U : never
+// }[T]
+
+type LookUp<U extends { type: string }, T> = U extends { type: T } ? U : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
