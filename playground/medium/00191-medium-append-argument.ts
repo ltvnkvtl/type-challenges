@@ -23,7 +23,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type AppendArgument<Fn, A> = any
+// type AppendArgument<Fn extends (...args: any[]) => unknown, A> =
+//     Fn extends (...args: infer Args) => infer Return ? (x: A, ...args: Args) => Return : never
+
+type AppendArgument<Fn extends (...args: any[]) => unknown, A> =
+    Fn extends (...args: infer Args) => infer Return ? (...args: [...Args, A]) => Return : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
